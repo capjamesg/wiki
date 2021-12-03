@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="main_content_box">
+    <h1>Create a wiki page</h1>
+    <p>Use the form below to create an entry on the wiki.</p>
+    <form action="/wiki/create" method="POST" enctype="multipart/form-data">
+        <label for="title">Title:</label><br>
+        <input type="text" name="title" id="title" placeholder="Coffee" required /><br>
+        <label for="content">Content:</label><br>
+        <textarea name="content" id="content" rows="20" required></textarea><br>
+        <label for="slug">Slug:</label><br>
+        <input type="text" name="slug" id="slug" placeholder="coffee" required /><br>
+        <label for="folder">Folder:</label><br>
+        <input type="text" name="folder" id="folder" placeholder="Wiki" value="Wiki" required /><br>
+        <label for="is_private">Check the box below if you want the wiki entry to be private:</label><br>
+        <input type="checkbox" name="is_private" id="is_private" value="1" /><br>
+        <input type="submit" value="Create wiki page">
+    </form>
+</section>
+{% endblock %}

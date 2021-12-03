@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    {% if title %}
+      <title>{{ title }}</title>
+    {% else %}
+      <title>capjamesg's Personal Wiki</title>
+    {% endif %}
+
+    <link href="mailto:jamesgjamesg.blog" rel="me">
+
+    <link rel="stylesheet" href="/styles.css" />
+
+    <link rel="icon" href="/favicon.ico" />
+
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico">
+
+    <link rel="webmention" href="https://webmention.jamesg.blog/endpoint" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="twitter:card" content="summary">
+
+    <link rel="search" type="application/opensearchdescription+xml" title="James' Wiki Search" href="https://wiki.jamesg.blog/search.xml">
+
+    {% if session["theme"] == "dark" %}
+      <style>
+        html, .citation_box, details, summary, .social li, .construction, .stub {
+          background-color: #1F2937;
+        }
+        a {
+          color: lightgreen;
+          border-bottom: 2px dotted lightgreen;
+        }
+        a:hover {
+          color: #ccc;
+        }
+        h1, h2, h3 {
+          color: orange;
+        }
+        .social_interaction, .webmention {
+          background: none;
+        }
+        p, li, dt, dd, .indieweb_footer, input, label {
+          color: white;
+        }
+        input, textarea, code, pre, aside {
+          background-color: #0c2548;
+          color: #ccc;
+        }
+      </style>
+    {% endif %}
+  </head>
+  <body>
+      <script>
+        function trigger_modal(id) {
+            var modal = document.getElementById(id);
+            if (modal.style.display == "none") {
+                modal.style.display = "block";
+            } else {
+                modal.style.display = "none";
+            }
+        }
+      </script>
+    <main class="flex_item">
+      <aside id="sidebar">
+          <a href="#main" class="accessibility_label">Skip to main content</a>
+          <span class="close mobile_close" onclick="trigger_modal('sidebar')">&times;</span>
+          <h2>Explore The Wiki</h2>
+          {% if session["logged_in"] == True %}
+            <p>You are logged in as {{ session["me"] }} 👋</p>
+            <ul class="no_indent">
+                <li><a href="/">Home</a></li>
+                <li><a href="/wiki/entries">All Entries</a></li>
+                <li><a href="/wiki/create">Create a page</a></li>
+                <li><a href="/wiki/search">Search for a page</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/wiki/random">Random</a></li>
+                {% if session["theme"] == "dark" %}
+                  <li><a href="/theme">Toggle Light Mode</a></li>
+                {% else %}
+                  <li><a href="/theme">Toggle Dark Mode</a></li>
+                {% endif %}
+                <li><a href="https://github.com/capjamesg/wiki">Source Code</a></li>
+            </ul>
+          {% else %}
+          <ul class="no_indent">
+              <li><a href="/">Home</a></li>
+              <li><a href="/login">Log in</a></li>
+              <li><a href="/wiki/entries">All Entries</a></li>
+              <li><a href="/wiki/random">Random</a></li>
+              {% if session["theme"] == "dark" %}
+                <li><a href="/theme">Toggle Light Mode</a></li>
+              {% else %}
+                <li><a href="/theme">Toggle Dark Mode</a></li>
+              {% endif %}
+              <li><a href="https://github.com/capjamesg/wiki">Source Code</a></li>
+          </ul>
+          {% endif %}
+          <ul class="top_level_list">
+              <h2>Wiki Pages</h2>
+              {% for page in pages %}
+                <li><a href="/{{ page[1] }}">{{ page[0] }}</a></li>
+              {% endfor %}
+              {% if is_wiki_entry == True and session["me"] == "https://jamesg.blog" %}
+                <h2>Manage this page</h2>
+                <p><a href="{% if slug == '/' %}/index/edit{% else %}/{{ slug }}/edit{% endif %}">Edit this page</a></p>
+                <p><a href="{% if slug == '/' %}/index/delete{% else %}/{{ slug }}/delete{% endif %}">Delete this page</a></p>
+                <p><a href="{% if slug == '/' %}/index/revisions{% else %}/{{ slug }}/revisions{% endif %}">Page revision history</a></p>
+              {% elif session.get("me") and is_wiki_entry == True %}
+                <p><a href="{% if slug == '/' %}/index/revisions{% else %}/{{ slug }}/revisions{% endif %}">Page revision history</a></p>
+              {% endif %}
+          </ul>
+      </aside>
+      <div id="main" class="flex_right_home h-entry">
+        <p><a class="mobile_close" onclick="trigger_modal('sidebar')" href="#">Open Sidebar</a></p>
+        {% if table_of_contents %}
+            <details class="toc">
+                <summary>Table of Contents</summary>
+                <h2>Table of Contents</h2>
+                {% include "table_of_contents.html" %}
+            </details>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+        <p class="accessibility_label"><a href="#main">Go Back to the Top</a></p>
+      </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="[-name">{{ title }}</h1>
+<p>Changes description: <span class="p-summary">{{ changes_description }}</span></p>
+<h2>Diff</h2>
+<p>{{ diff | safe }}</p>
+<h2>Content in Revision</h2>
+<section class="e-content">
+{{ content | safe }}
+</section>
+
+{% if last_modified %}
+  <hr>
+  <p>Last Modified: {{ " ".join(last_modified.split(" ")[:3]) }}</p>
+{% endif %}
+
+{% endblock %}

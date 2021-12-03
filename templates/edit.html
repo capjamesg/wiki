@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="main_content_box">
+    <h1>Edit {{ entry[0] }}</h1>
+    <p>Use the form below to create an entry on the wiki.</p>
+    <p>This file was last modified on {{ modified_date }}.</p>
+    <form action="/{{ entry[3] }}/edit" method="POST" enctype="multipart/form-data">
+        <label for="title">Title:</label><br>
+        <input type="text" name="title" id="title" placeholder="Coffee" value="{{ entry[0] }}" required /><br>
+        <label for="content">Content:</label><br>
+        <textarea name="content" id="content" rows="20" required>{{ entry[1] }}</textarea><br>
+        <label for="folder">Folder:</label><br>
+        <input type="text" name="folder" id="folder" placeholder="Wiki" value="{{ entry[2] }}" required /><br>
+        <label for="slug">Slug:</label><br>
+        <input type="text" name="slug" id="slug" placeholder="coffee" value="{{ entry[3] }}" required /><br>
+        <label for="slug">Description of changes:</label><br>
+        <input type="text" name="changes_description" id="changes_description" value="Minor edit" required /><br>
+        <input type="submit" value="Edit wiki page">
+    </form>
+</section>
+{% endblock %}

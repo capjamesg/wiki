@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Wiki Search</h1>
+
+<p>Use the search bar below to find a resource on the wiki.</p>
+
+<form action="/wiki/search" method="POST">
+    <input type="search" id="query" name="query" placeholder="Your query..." required aria-label="Search" autocomplete="off">
+    <input type="submit" value="Search">
+</form>
+
+{% if entries %}
+<h2>Search Results</h2>
+<p>Here are the results that match your query:</p>
+<ul>
+    {% for entry in entries %}
+        <li><a href="/{{ entry.slug }}">{{ entry.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

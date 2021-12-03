@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="main_content_box">
+    <h1>James' Coffee Blog Wiki</h1>
+    <p>Approved users can log in to make view pages only accessible by people who are signed in.</p>
+    <p>Sign in is powered by IndieAuth. This means means you can log in to the Micropub dashboard with your domain name.</p>
+    <p>Enter your domain name below to log in to the wiki.</p>
+    <form action="/discover" method="POST">
+      <label for="indie_auth_url">Web Address:</label><br>
+      <input id="indie_auth_url" type="url" name="indie_auth_url" placeholder="https://yourdomain.com" /><br>
+      <input type="submit" value="Sign in" />
+    </form>
+</section>
+{% endblock %}

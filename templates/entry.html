@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="p-name">{{ title }}</h1>
+<section class="e-content">
+{{ contents | safe }}
+</section>
+
+{% if last_modified %}
+  <hr>
+  <p>Last Modified: <time class="dt-updated" datetime="{{ ' '.join(last_modified.split(' ')[:3]) }}">{{ " ".join(last_modified.split(" ")[:3]) }}</time></p>
+{% endif %}
+
+{% endblock %}
